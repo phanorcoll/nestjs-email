@@ -1,12 +1,17 @@
 import { Controller, Get, Post, Patch } from '@nestjs/common';
+import { UsersService } from './users.service';
+import { User } from './schemas/user.schema';
 
 @Controller('users')
 export class UsersController {
+  constructor(
+    private readonly usersService: UsersService
+  ){}
 
   //List Users
   @Get()
   getListUsers(){
-    return {"message": "Returns the list of users"}
+    return this.usersService.findAll();
   }
 
   //Creates a user (ex.signup)
