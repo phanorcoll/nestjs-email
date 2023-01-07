@@ -22,6 +22,10 @@ export class UsersService {
     return this.userModel.find();
   }
 
+  async findEmail(email:string): Promise<User[]> {
+    return this.userModel.find({email});
+  }
+
   async update(id:string, attrs: Partial<User>) {
     return this.userModel.findByIdAndUpdate(id, attrs, { new: true });
   }
