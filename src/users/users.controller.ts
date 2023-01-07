@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Patch } from '@nestjs/common';
+import { 
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Body,
+  Param,
+  NotFoundException
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './schemas/user.schema';
 
@@ -16,14 +24,23 @@ export class UsersController {
 
   //Creates a user (ex.signup)
   @Post()
-  createUser(){
-    return {"message": "Creates a user, normally from signup"}
+  createUser(@Body() data:User){
+    return this.usersService.create(data);
+  }
+
+  @Get(':id')
+  getUser(@Param('id') id:string) {
+    const user = this.usersService.findOne(id);
+    if(!user){
+      throw new NotFoundException('user not found');
+    }
+    return user;
   }
 
   //Updates a user
   @Patch(':id')
-  updateUser(){
-    return {"message": "Updates user data"}
+  updateUser(@Param('id') id:string, @Body() body:User){
+    return this.usersService.update(id, body);
   }
 
 }
