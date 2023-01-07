@@ -15,7 +15,7 @@ export class AuthService {
 
   async signup(email:string, password:string){
     const users = await this.usersService.findEmail(email);
-    let newUser:User;
+    let newUser;
     if(users.length){
       throw new BadRequestException('email in use');
     }

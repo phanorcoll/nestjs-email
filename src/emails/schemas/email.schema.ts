@@ -1,14 +1,16 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 
 export type EmailDocument = HydratedDocument<Email>;
 
 @Schema()
 export class Email{
+  _id:MongooseSchema.Types.ObjectId;
+  
   @Prop({required: true})
   to:string;
 
-  @Prop({required: true})
+  @Prop()
   from:string;
 
   @Prop({default: Date.now})

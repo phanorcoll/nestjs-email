@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Email, EmailDocument } from './schemas/email.schema';
 import { Model } from 'mongoose';
+import { User } from '../users/schemas/user.schema';
 
 @Injectable()
 export class EmailsService {
@@ -9,8 +10,7 @@ export class EmailsService {
     @InjectModel(Email.name) private emailModel: Model<EmailDocument>
   ){}
 
-  async create(email:Email): Promise<Email> {
-    console.log(email.to)
+  async create(user:User, email:Email): Promise<Email> {
     return this.emailModel.create(email);
   }
 
