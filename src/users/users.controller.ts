@@ -30,7 +30,6 @@ export class UsersController {
   @Post('/signup')
   async createUser(@Body() data:User, @Session() session: any){
     const user = await this.authService.signup(data.email,data.password);
-    console.log(user);
     session.userEmail = user.email;
 
     return user;
@@ -47,13 +46,6 @@ export class UsersController {
   @Post('/signout')
   sighOut(@Session() session:any) {
     session.userEmail = null;
-  }
-
-  @Get('/whoami')
-  @UseGuards(AuthGuard)
-  whoAmI(@CurrentUser() user:User){
-    // return this.usersService.findEmail(session.userEmail);
-    return user;
   }
 
   //List Users
