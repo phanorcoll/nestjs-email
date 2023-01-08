@@ -36,6 +36,9 @@ $ yarn install
 
 ```bash
 # development
+# Start the Mongodb and Mongo-express containers first
+$ docker compose up -d 
+
 $ yarn run start
 
 # watch mode
