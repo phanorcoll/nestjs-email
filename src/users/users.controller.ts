@@ -59,8 +59,12 @@ export class UsersController {
   //List Users
   @Get('/list')
   @UseGuards(AuthGuard)
-  getListUsers(){
-    return this.usersService.findAll();
+  async getListUsers(){
+    const users = await this.usersService.findAll();
+    if(!users){
+      throw new NotFoundException('no users are present');
+    }
+    return users;
   }
 
   //Gets a particular user

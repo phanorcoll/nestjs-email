@@ -9,7 +9,7 @@ export class UsersService {
     @InjectModel(User.name) private userModel: Model<UserDocument>
   ){}
 
-  async create(user:User): Promise<User> {
+  async create(user:User): Promise<User>{
     return this.userModel.create(user);
   }
 
