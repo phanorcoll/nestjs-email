@@ -51,8 +51,6 @@ const Dashboard: React.FunctionComponent = () => {
     return body.substring(0, limit);
   }
 
-  console.log()
-
   return (
     <section className='flex gap-5 m-5'>
       <div className='bg-white p-5 rounded-md w-60'>
