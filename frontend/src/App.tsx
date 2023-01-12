@@ -1,11 +1,11 @@
 import Login from './components/Login/login';
-import Dashboard from './components/Dashboard/dashboard';
+import { Link } from  'react-router-dom';
 
 const App: React.FunctionComponent = () => {
   return (
     <section>
       <Login />
-      <Dashboard />
+      <Link to='/dashboard'> Go to Dashboard</Link>
     </section>
   )
 }

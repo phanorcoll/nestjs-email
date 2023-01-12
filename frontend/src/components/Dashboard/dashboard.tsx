@@ -1,7 +1,10 @@
+import { Link } from 'react-router-dom';
+
 const Dashboard: React.FunctionComponent = () =>{
   return(
     <section>
-      This is DASHBOARD
+      <div>This is DASHBOARD</div>
+      <Link to='/'>back to home</Link>
     </section>
   )
 }
