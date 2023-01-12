@@ -3,11 +3,24 @@ import appIcon from '../../assets/email.png';
 import composeIcon from '../../assets/compose.png';
 import inboxIcon from '../../assets/inbox.png';
 import logoutIcon from '../../assets/logout.png';
+import rightArrow from '../../assets/arrow.png';
+import { demoData } from './demoData.js';
+import { format } from 'date-fns';
 
 interface MenuItem {
   title: string;
   url: string;
   icon: string;
+}
+
+interface Email{
+  to: string,
+  from: string,
+  receivedDate: string,
+  read: boolean,
+  deleted: boolean,
+  draft: boolean,
+  body: string,
 }
 
 const Dashboard: React.FunctionComponent = () => {
@@ -34,6 +47,12 @@ const Dashboard: React.FunctionComponent = () => {
     navigate("/");
   }
 
+  const truncateBody = (body:string, limit:number) =>{
+    return body.substring(0, limit);
+  }
+
+  console.log()
+
   return (
     <section className='flex gap-5 m-5'>
       <div className='bg-white p-5 rounded-md w-60'>
@@ -52,7 +71,20 @@ const Dashboard: React.FunctionComponent = () => {
         </div>
       </div>
       <div className='bg-white p-5 rounded-md'>
-        <div>list email</div>
+        {demoData.map((email, i) => {
+          return(
+            <div key={i} className={`p-3 mb-2 rounded-md flex gap-5 cursor-pointer ${email.read ? 'bg-gray-200' : 'bg-gray-50'} hover:bg-gray-200`}>
+              <div className='inline-block'><img src={rightArrow} alt="vertrical" /></div>
+              <div className={`${email.read ? 'font-normal':'font-bold'}`}>{email.from}</div>
+              <div className='flex gap-2 align-bottom'>
+                <div className={`${email.read ? 'font-normal':'font-bold'}`}>{truncateBody(email.subject, 100)}</div>
+                <div>-</div>
+                <div className='text-sm text-gray-500'>{truncateBody(email.body, 50)}...</div>
+                <div className='text-sm text-gray-600 font-bold'>{format(new Date(email.receivedDate), 'dd/mm/yyyy')}</div>
+              </div>
+            </div>
+          )
+        })}
       </div>
     </section>
   )
