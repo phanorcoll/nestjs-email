@@ -9,7 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query-devtools": "^4.22.0",
     "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.2.2",
     "date-fns": "^2.29.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

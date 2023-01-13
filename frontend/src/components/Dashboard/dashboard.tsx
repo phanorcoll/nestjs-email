@@ -1,11 +1,9 @@
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import appIcon from '../../assets/email.png';
-import composeIcon from '../../assets/compose.png';
-import inboxIcon from '../../assets/inbox.png';
-import logoutIcon from '../../assets/logout.png';
+import SideBar from '../menu/sidebar';
 import rightArrow from '../../assets/arrow.png';
-import { demoData } from './demoData.js';
 import { format } from 'date-fns';
+import axios from 'axios';
 
 interface MenuItem {
   title: string;
@@ -24,53 +22,33 @@ interface Email{
 }
 
 const Dashboard: React.FunctionComponent = () => {
+
+  const [emails, setEmails] = useState([]);
+
+  useEffect(()=>{
+    axios.get('http://localhost:3000/emails')
+    .then(function (response) {
+      setEmails(response.data);
+    })
+    .catch(function (error) {
+      //TODO: redirect to login if status is 403 or to an error page
+      console.log(error.response.data.message);
+    });
+    }, [])
+
   const navigate = useNavigate();
 
-  //create the menu items, easier to add or remove
-  const menu: MenuItem[] = [
-    {
-      title: 'Compose',
-      url: 'compose',
-      icon: composeIcon,
-    },
-    {
-      title: 'Inbox',
-      url: 'inbox',
-      icon: inboxIcon,
-    },
-  ];
-
-  //TODO: create the logic for logging out user, based on what the
-  //login endoint returns
-  const logout = () =>{
-    console.log("loggin out");
-    navigate("/");
-  }
-
   const truncateBody = (body:string, limit:number) =>{
-    return body.substring(0, limit);
+    return body?.substring(0, limit);
   }
 
   return (
     <section className='flex gap-5 m-5'>
-      <div className='bg-white p-5 rounded-md w-60'>
-        <div className='flex justify-center'><img src={appIcon} alt="vertrical" /></div>
-        <div>
-          <span className='text-gray-600 font-bold'>welcome</span>
-          <div className='text-indigo-400 text-sm'>phanorcoll@gmail.com</div>
-        </div>
-        {
-          menu.map(item => {
-          return <div key={item.title} className="p-2 rounded-md flex gap-2 align-middle my-4 hover:bg-indigo-200 cursor-pointer"><img src={item.icon} /> {item.title} </div>
-        })}
-        <div className='flex gap-2 mt-14 p-2 rounded-md hover:bg-red-400 cursor-pointer' onClick={logout}>
-          <img src={logoutIcon} alt="vertrical" />
-          logout
-        </div>
-      </div>
-      <div className='bg-white p-5 rounded-md'>
-        {demoData.map((email, i) => {
+      <SideBar />
+      <div className='bg-white p-5 rounded-md w-5/12'>
+        {emails ? emails.map((email, i) => {
           return(
+            <Link key={i} to={`/dashboard/email/${email._id}`}>
             <div key={i} className={`p-3 mb-2 rounded-md flex gap-5 cursor-pointer ${email.read ? 'bg-gray-200' : 'bg-gray-50'} hover:bg-gray-200`}>
               <div className='inline-block'><img src={rightArrow} alt="vertrical" /></div>
               <div className={`${email.read ? 'font-normal':'font-bold'}`}>{email.from}</div>
@@ -81,8 +59,9 @@ const Dashboard: React.FunctionComponent = () => {
                 <div className='text-sm text-gray-600 font-bold'>{format(new Date(email.receivedDate), 'dd/mm/yyyy')}</div>
               </div>
             </div>
+            </Link>
           )
-        })}
+        }) : 'loading'}
       </div>
     </section>
   )
