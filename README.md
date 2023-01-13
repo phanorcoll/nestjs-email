@@ -24,15 +24,14 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
+email ui practice using Nestjs for the backend and Vite(Reactjs + typescript) for the frontend
+## Installation - run this inside both the [ frontend ] and [ backend ] folders
 
 ```bash
 $ yarn install
 ```
 
-## Running the app
+## Running the app [ backend ]
 
 ```bash
 # development
@@ -48,7 +47,7 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
-## Test
+## Test [ backend ]
 
 ```bash
 # unit tests
@@ -61,16 +60,8 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
-## Support
+## Running the app [ frontend ]
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+$ npm run dev
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).

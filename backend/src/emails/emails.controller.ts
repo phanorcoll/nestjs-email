@@ -5,7 +5,8 @@ import {
   Patch,
   Param,
   Body,
-  UseGuards
+  UseGuards,
+  Session
 } from '@nestjs/common';
 import { EmailsService } from './emails.service';
 import { Email } from './schemas/email.schema';
@@ -21,18 +22,18 @@ export class EmailsController {
 
   //Find a particular email
   @Get(':id')
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   getEmail(@Param('id') id:string) {
     return this.emailsService.getEmailData(id);
   }
 
   //List emails for a particular user 
   //The key for the user will be held in a session cookie
-  @Get('/get')
-  @UseGuards(AuthGuard)
-  getListEmails(@CurrentUser() user:User){
-    const {email} = user[0]
-    console.log(email)
+  @Get()
+  // @UseGuards(AuthGuard)
+  getListEmails(@Session() session:any){
+    // const email = session.userEmail
+    const email = 'mx@test.com';
     return this.emailsService.getListEmailsPerUser(email)
   }
 
@@ -40,7 +41,6 @@ export class EmailsController {
   @Post()
   @UseGuards(AuthGuard)
   createEmail(@CurrentUser() user: User, @Body() data:Email){
-    console.log(user)
     return this.emailsService.create(user, data);
   }
 

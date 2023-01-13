@@ -51,7 +51,7 @@ export class UsersController {
   //List Users
   @Get('/list')
   @UseGuards(AuthGuard)
-  async getListUsers(){
+  async getListUsers(@CurrentUser() user:User){
     const users = await this.usersService.findAll();
     if(!users){
       throw new NotFoundException('no users are present');
@@ -64,9 +64,7 @@ export class UsersController {
   @UseGuards(AuthGuard)
   async getUser(@CurrentUser() user:User) {
     const {_id} = user[0];
-    console.log(_id)
     const userFound = await this.usersService.findOne(_id);
-    console.log(userFound)
     if(!userFound){
       throw new NotFoundException('user not found');
     }
