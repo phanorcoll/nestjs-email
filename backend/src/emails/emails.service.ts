@@ -15,9 +15,9 @@ export class EmailsService {
   }
 
   async getListEmailsPerUser(email:string): Promise<Email[]> {
-    const emails = await this.emailModel.find({"to":email});
+    const emails = await this.emailModel.find({to:email}).exec();
     if(emails.length === 0) {
-      throw new NotFoundException('no user found')
+      throw new NotFoundException('user has no emails')
     }
 
     return emails;
@@ -34,7 +34,6 @@ export class EmailsService {
 
   async update(id:string, attrs: Partial<Email>): Promise<Email>{
     const email = this.emailModel.findByIdAndUpdate(id, attrs, { new: true });
-    console.log(email);
     return email;
   }
 

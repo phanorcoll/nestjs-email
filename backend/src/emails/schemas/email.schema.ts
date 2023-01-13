@@ -25,6 +25,9 @@ export class Email{
   @Prop({default: false})
   draft:boolean;
 
+  @Prop()
+  subjet:string;
+
   @Prop({default: false})
   body:string;
 

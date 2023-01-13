@@ -7,6 +7,7 @@ async function bootstrap() {
   app.use(cookieSession({
     keys:['lorenipsum_vertrical_test']
   }))
+  app.enableCors();
   await app.listen(3000);
 }
 bootstrap();
